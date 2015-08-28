@@ -50,6 +50,8 @@ any options passed before `filename` are options for
 [chrome](http://electron.atom.io/docs/v0.31.0/api/chrome-command-line-switches/) or electron.
 any [BrowserWindow](http://electron.atom.io/docs/v0.31.0/api/browser-window/#new-browserwindow-options) option can be set this way.
 
+If no arguments are provided, electro will open a repl (aka, a browser window with devtools)
+
 
 ## License
 
