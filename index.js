@@ -2,6 +2,7 @@
 var path = require('path')
 
 var argv = [], _argv = []
+
 process.argv.slice(2).forEach(function (s) {
   if(s[0] !== '-' || argv.length)
     argv.push(s)
@@ -9,13 +10,18 @@ process.argv.slice(2).forEach(function (s) {
     _argv.push(s)
 })
 
-argv.unshift('electro')
+var opts = require('minimist')(_argv)
 
-if(!argv[1]) {
-  console.error('usage:')
-  console.error('  electro {chrome/electro-options} filename.js {options}')
-  process.exit(1)
+argv.unshift('electro')
+argv.unshift('') //magically make it work
+
+if(!argv[2]) {
+  argv[2] = path.join(__dirname, 'examples', 'repl.js')
+  opts.dev = true
 }
+
+
+console.log(argv)
 
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
@@ -35,8 +41,6 @@ app.on('window-all-closed', function() {
 process.removeAllListeners('uncaughtException')
 process.removeAllListeners('exit')
 
-var opts = require('minimist')(_argv)
-
 process.stdin.pause()
 
 var qs = require('querystring')
@@ -51,6 +55,7 @@ app.on('ready', function next () {
   proc.stdout = process.stdout.isTTY
 
   // and load the index.html of the app.
+  console.log('file://' + path.join(__dirname, 'index.html') + '?' + qs.stringify(proc))
   mainWindow.loadUrl('file://' + path.join(__dirname, 'index.html') + '?' + qs.stringify(proc));
 
   mainWindow.webContents.on('dom-ready', function () {
