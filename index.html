@@ -1,0 +1,49 @@
+<body>
+</body>
+<script>
+
+var streams = require('stream')
+var ipc = require('ipc')
+
+var opts = require('querystring').parse(location.search)
+process.argv = opts.argv
+
+console.log(opts)
+
+process.stdin.isTTY = opts.stdin
+process.stdout.isTTY = opts.stdout
+process.stderr.isTTY = opts.stderr
+
+process.title = 'electro'
+
+var stdin = process.stdin// = new streams.Readable()
+
+if(process.stdin !== stdin)
+  throw new Error('Weird!')
+
+stdin._read = function () {
+  this.push('')
+}
+
+ipc.on('process.stdin', function (data) {
+  stdin.push(data &&  new Buffer(data, 'base64'))
+})
+
+function stdo (name) {
+  var stream = process[name] =  new streams.Writable()
+  var event = 'process.'+name
+  stream._write = function (data, enc, callback) {
+    if(Buffer.isBuffer(data))
+      ipc.send(event, data.toString('base64'))
+    else
+      ipc.send(event, new Buffer(data, enc || 'utf8').toString('base64'))
+    callback()
+  }
+}
+
+stdo('stdout')
+stdo('stderr')
+
+require(require('path').resolve(process.argv[1]))
+
+</script>
