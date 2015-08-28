@@ -20,9 +20,6 @@ if(!argv[2]) {
   opts.dev = true
 }
 
-
-console.log(argv)
-
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 
@@ -55,7 +52,6 @@ app.on('ready', function next () {
   proc.stdout = process.stdout.isTTY
 
   // and load the index.html of the app.
-  console.log('file://' + path.join(__dirname, 'index.html') + '?' + qs.stringify(proc))
   mainWindow.loadUrl('file://' + path.join(__dirname, 'index.html') + '?' + qs.stringify(proc));
 
   mainWindow.webContents.on('dom-ready', function () {

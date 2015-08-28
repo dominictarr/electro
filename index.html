@@ -8,8 +8,6 @@ var ipc = require('ipc')
 var opts = require('querystring').parse(location.search)
 process.argv = opts.argv
 
-console.log(opts)
-
 process.stdin.isTTY = opts.stdin
 process.stdout.isTTY = opts.stdout
 process.stderr.isTTY = opts.stderr
@@ -44,7 +42,6 @@ function stdo (name) {
 stdo('stdout')
 stdo('stderr')
 
-console.log(process.argv)
 require(require('path').resolve(process.argv[1]))
 
 </script>
