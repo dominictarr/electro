@@ -44,7 +44,7 @@ electro ./examples/cat.js < README.md
 
 make sure electron is installed first!
 
-`npm install electron -g`
+`npm install electron-prebuilt -g`
 
 ```
 electro [electro options] filename {options}
