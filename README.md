@@ -42,6 +42,10 @@ electro ./examples/cat.js < README.md
 
 ## Usage
 
+make sure electron is installed first!
+
+`npm install electron -g`
+
 ```
 electro [electro options] filename {options}
 ```
