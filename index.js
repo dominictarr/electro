@@ -1,5 +1,22 @@
 #! /usr/bin/env electron
 var path = require('path')
+
+var argv = [], _argv = []
+process.argv.slice(2).forEach(function (s) {
+  if(s[0] !== '-' || argv.length)
+    argv.push(s)
+  else
+    _argv.push(s)
+})
+
+argv.unshift('electro')
+
+if(!argv[1]) {
+  console.error('usage:')
+  console.error('  electro {chrome/electro-options} filename.js {options}')
+  process.exit(1)
+}
+
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 
@@ -17,17 +34,6 @@ app.on('window-all-closed', function() {
 
 process.removeAllListeners('uncaughtException')
 process.removeAllListeners('exit')
-
-var argv = [], _argv = []
-process.argv.slice(2).forEach(function (s) {
-  if(s[0] !== '-' || argv.length)
-    argv.push(s)
-  else
-    _argv.push(s)
-})
-
-argv.unshift(process.argv[1])
-argv.unshift('electro')
 
 var opts = require('minimist')(_argv)
 
