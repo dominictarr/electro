@@ -44,6 +44,7 @@ var qs = require('querystring')
 
 app.on('ready', function next () {
   // Create the browser window.
+//  opts.preload = path.join(__dirname, 'preload.js')
   var mainWindow = new BrowserWindow(opts);
 
   var proc = { argv: argv }
@@ -67,11 +68,11 @@ app.on('ready', function next () {
     var ipc = require('ipc')
 
     ipc.on('process.stdout', function (s, data) {
-      process.stdout.write(new Buffer(arg, 'base64'))
+      process.stdout.write(new Buffer(data, 'base64'))
     })
 
     ipc.on('process.stderr', function (s, data) {
-      process.stderr.write(new Buffer(arg, 'base64'))
+      process.stderr.write(new Buffer(data, 'base64'))
     })
 
   })
