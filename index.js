@@ -3,8 +3,9 @@ var path = require('path')
 
 var argv = [], _argv = []
 
+//why did I do this?
 process.argv.slice(2).forEach(function (s) {
-  if(s[0] !== '-' || argv.length)
+  if(s[0] !== '-' && !argv.length)
     argv.push(s)
   else
     _argv.push(s)
@@ -77,10 +78,16 @@ app.on('ready', function next () {
 
   })
 
+  mainWindow.webContents.on('new-window', function (e, url) {
+    // open in the browser
+    e.preventDefault()
+    shell.openExternal(url)
+  })
+
   // Open the devtools.
   if(opts.dev)
-    mainWindow.openDevTools();
-
+    mainWindow.webContents.openDevTools();
+    
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows
@@ -89,3 +96,8 @@ app.on('ready', function next () {
     mainWindow = null;
   });
 })
+
+
+
+
+
