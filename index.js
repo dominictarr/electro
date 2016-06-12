@@ -14,14 +14,11 @@ else
 
 var opts = require('minimist')(_argv)
 
-console.log(argv, _argv)
-
 argv.unshift('electro')
 
 var electron = require('electron')
 var app = electron.app;  // Module to control application life.
 var BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
-console.log(app)
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is GCed.
 var mainWindow = null;
@@ -52,7 +49,6 @@ app.on('ready', function next () {
   proc.stdout = process.stdout.isTTY
 
   // and load the index.html of the app.
-  console.log(proc)
 
 //  require('assert').deepEqual(qs.parse(qs.stringify(proc)), proc)
   mainWindow.loadUrl('file://' + path.join(__dirname, 'index.html') + '?' +
@@ -98,9 +94,4 @@ app.on('ready', function next () {
     mainWindow = null;
   });
 })
-
-
-
-
-
 
