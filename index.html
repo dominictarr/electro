@@ -5,19 +5,16 @@
 var streams = require('stream')
 var ipc = require('ipc')
 
-var opts = require('querystring').parse(location.search)
+var opts = require('querystring').parse(decodeURIComponent(location.search.substring(1)))
 process.argv = opts.argv
 
-process.stdin.isTTY = opts.stdin
-process.stdout.isTTY = opts.stdout
-process.stderr.isTTY = opts.stderr
+process.stdin.isTTY = opts.stdin == 'true'
+process.stdout.isTTY = opts.stdout == 'true'
+process.stderr.isTTY = opts.stderr == 'true'
 
 process.title = 'electro'
 
 var stdin = process.stdin// = new streams.Readable()
-
-if(process.stdin !== stdin)
-  throw new Error('Weird!')
 
 stdin._read = function () {
   this.push('')
@@ -41,7 +38,9 @@ function stdo (name) {
 
 stdo('stdout')
 stdo('stderr')
-
 require(require('path').resolve(process.argv[1]))
 
 </script>
+
+
+
