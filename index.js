@@ -3,27 +3,25 @@ var path = require('path')
 
 var argv = [], _argv = []
 
-//why did I do this?
-process.argv.slice(2).forEach(function (s) {
-  if(s[0] !== '-' && !argv.length)
-    argv.push(s)
-  else
-    _argv.push(s)
-})
+var i = process.argv.indexOf('--')
+
+if(~i) {
+  argv = process.argv.slice(2, i)
+  _argv = process.argv.slice(i + 1)
+}
+else
+  argv = process.argv.slice(2)
 
 var opts = require('minimist')(_argv)
 
+console.log(argv, _argv)
+
 argv.unshift('electro')
-argv.unshift('') //magically make it work
 
-if(!argv[2]) {
-  argv[2] = path.join(__dirname, 'examples', 'repl.js')
-  opts.dev = true
-}
-
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
-
+var electron = require('electron')
+var app = electron.app;  // Module to control application life.
+var BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+console.log(app)
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is GCed.
 var mainWindow = null;
@@ -54,7 +52,11 @@ app.on('ready', function next () {
   proc.stdout = process.stdout.isTTY
 
   // and load the index.html of the app.
-  mainWindow.loadUrl('file://' + path.join(__dirname, 'index.html') + '?' + qs.stringify(proc));
+  console.log(proc)
+
+//  require('assert').deepEqual(qs.parse(qs.stringify(proc)), proc)
+  mainWindow.loadUrl('file://' + path.join(__dirname, 'index.html') + '?' +
+    encodeURIComponent(qs.stringify(proc)));
 
   mainWindow.webContents.on('dom-ready', function () {
     process.stdin
@@ -96,6 +98,7 @@ app.on('ready', function next () {
     mainWindow = null;
   });
 })
+
 
 
 
