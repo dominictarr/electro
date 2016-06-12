@@ -1,7 +1,7 @@
 {
   "name": "electro",
   "description": "electron and unix make friends",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/dominictarr/electro",
   "repository": {
     "type": "git",
