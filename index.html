@@ -3,7 +3,7 @@
 <script>
 
 var streams = require('stream')
-var ipc = require('ipc')
+var ipc = require('electron').ipcRenderer
 
 var opts = require('querystring').parse(decodeURIComponent(location.search.substring(1)))
 process.argv = opts.argv

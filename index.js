@@ -51,7 +51,8 @@ app.on('ready', function next () {
   // and load the index.html of the app.
 
 //  require('assert').deepEqual(qs.parse(qs.stringify(proc)), proc)
-  mainWindow.loadUrl('file://' + path.join(__dirname, 'index.html') + '?' +
+  console.log(mainWindow)
+  mainWindow.loadURL('file://' + path.join(__dirname, 'index.html') + '?' +
     encodeURIComponent(qs.stringify(proc)));
 
   mainWindow.webContents.on('dom-ready', function () {
@@ -64,8 +65,8 @@ app.on('ready', function next () {
       })
       .resume()
 
-    var ipc = require('ipc')
-
+    var ipc = electron.ipcMain //require('ipc')
+  console.log(electron)
     ipc.on('process.stdout', function (s, data) {
       process.stdout.write(new Buffer(data, 'base64'))
     })
