@@ -20,8 +20,11 @@ stdin._read = function () {
   this.push('')
 }
 
-ipc.on('process.stdin', function (data) {
-  stdin.push(data &&  new Buffer(data, 'base64'))
+ipc.on('process.stdin', function (data, data2) {
+  if('string' == typeof data2)
+    stdin.push(new Buffer(data2, 'base64'))
+  else if('string' === typeof data)
+    stdin.push(new Buffer(data1, 'base64'))
 })
 
 function stdo (name) {
@@ -41,6 +44,7 @@ stdo('stderr')
 require(require('path').resolve(process.argv[1]))
 
 </script>
+
 
 
 
