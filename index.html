@@ -25,6 +25,7 @@ ipc.on('process.stdin', function (data, data2) {
     stdin.push(new Buffer(data2, 'base64'))
   else if('string' === typeof data)
     stdin.push(new Buffer(data1, 'base64'))
+  else stdin.push(null)
 })
 
 function stdo (name) {
