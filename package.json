@@ -8,7 +8,8 @@
     "url": "git://github.com/dominictarr/electro.git"
   },
   "dependencies": {
-    "minimist": "~1.2.0"
+    "minimist": "~1.2.0",
+    "subarg": "^1.0.0"
   },
   "bin": "./index.js",
   "devDependencies": {},

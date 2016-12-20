@@ -46,7 +46,17 @@ stdo('stdout')
 stdo('stderr')
 require(require('path').resolve(process.argv[1]))
 
+console.log = function () {
+  process.stdout.write(JSON.stringify([].slice.call(arguments)))
+}
+console.error = function () {
+  process.stderr.write(JSON.stringify([].slice.call(arguments)))
+}
+
+
 </script>
+
+
 
 
 

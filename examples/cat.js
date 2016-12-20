@@ -10,5 +10,7 @@ document.body.appendChild(pre)
 .on('data', function (data) {
   console.log("DATA?", data.toString())
   pre.innerText += data.toString()
+  process.stdout.write(data)
 })
 .resume()
+
