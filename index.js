@@ -51,7 +51,6 @@ app.on('ready', function next () {
   // and load the index.html of the app.
 
 //  require('assert').deepEqual(qs.parse(qs.stringify(proc)), proc)
-  console.log(mainWindow)
   mainWindow.loadURL('file://' + path.join(__dirname, 'index.html') + '?' +
     encodeURIComponent(qs.stringify(proc)));
 
@@ -66,7 +65,6 @@ app.on('ready', function next () {
       .resume()
 
     var ipc = electron.ipcMain //require('ipc')
-  console.log(electron)
     ipc.on('process.stdout', function (s, data) {
       process.stdout.write(new Buffer(data, 'base64'))
     })
@@ -80,7 +78,7 @@ app.on('ready', function next () {
   mainWindow.webContents.on('new-window', function (e, url) {
     // open in the browser
     e.preventDefault()
-    shell.openExternal(url)
+    electron.shell.openExternal(url)
   })
 
   // Open the devtools.
